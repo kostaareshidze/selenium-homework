@@ -12,6 +12,7 @@ public class Main {
             WebElement webElement = (WebElement) element;
             webElement.click();
         }
-        System.out.println("I AM A CHANGE MEANWHILE");
+
+        System.out.println("I AM A CHANGE MEANWHILE!");
     }
 }
