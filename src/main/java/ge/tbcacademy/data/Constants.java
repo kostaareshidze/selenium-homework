@@ -42,7 +42,7 @@ public class Constants {
     public static final String forthTableURL = "https://www.w3schools.com/html/html_tables.asp";
     public static final String fifthTableURL = "https://www.freecodecamp.org/news/html-tables-table-tutorial-with-css-example-code/";
     public static final String length = "509m";
-    public static final String country = "Austria";
+    public static final String country = "Roland Mendel";
     public static final String fakeCountry = "beeustralia";
     public static final String creta = "Creta";
     public static final String cretato = "cretatotato";
@@ -50,6 +50,6 @@ public class Constants {
     public static final String fakeElement = "aaaaa";
     public static final String centro = "Centro comercial Moctezuma";
     public static final String fakeCentro = "Centro";
-    public static final String nyakundi = "Nyakundi";
+    public static final String nyakundi = "Hillary";
     public static final String iagundi = "iagundi";
 }
