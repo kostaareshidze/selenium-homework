@@ -33,4 +33,23 @@ public class Constants {
     public static final String name = "Konstantine";
     public static final String lastName = "Areshidze";
     public static final String location = "Tbilisi";
+    public static final String iFrameURL = "http://the-internet.herokuapp.com/iframe";
+    public static final String sendKeys = "Here Goes";
+    public static final String alertURL = "https://demoqa.com/alerts";
+    public static final String firstTableURL = "https://www.techlistic.com/2017/02/automate-demo-web-table-with-selenium.html";
+    public static final String secTableURL = "https://techcanvass.com/Examples/webtable.html";
+    public static final String thirdTableURL = "http://the-internet.herokuapp.com/challenging_dom#delete";
+    public static final String forthTableURL = "https://www.w3schools.com/html/html_tables.asp";
+    public static final String fifthTableURL = "https://www.freecodecamp.org/news/html-tables-table-tutorial-with-css-example-code/";
+    public static final String length = "509m";
+    public static final String country = "Austria";
+    public static final String fakeCountry = "beeustralia";
+    public static final String creta = "Creta";
+    public static final String cretato = "cretatotato";
+    public static final String element = "Definiebas0";
+    public static final String fakeElement = "aaaaa";
+    public static final String centro = "Centro comercial Moctezuma";
+    public static final String fakeCentro = "Centro";
+    public static final String nyakundi = "Nyakundi";
+    public static final String iagundi = "iagundi";
 }
