@@ -22,33 +22,33 @@ public class Main {
 
 
     }
-    public static void dynamicallyIndex(WebDriver driver, String string) {
+
+    public static String dynamicallyIndex(WebDriver driver, String header, String element) {
         List<WebElement> tables = driver.findElements(By.tagName("table"));
-        boolean isSearched = false;
         for (WebElement table : tables) {
             List<WebElement> rows = table.findElements(By.tagName("tr"));
-
-            for (WebElement row : rows) {
-                List<WebElement> singles = row.findElements(By.tagName("td"));
-
-                for (WebElement single : singles) {
-                    if (single.getText().equals(string)) {
-                        System.out.println(string);
-                        isSearched = true;
-                        break;
-                    }
-                }
-                if (isSearched) {
+            int columnIndex = -1;
+            WebElement headerRow = rows.get(0);
+            List<WebElement> headerCells = headerRow.findElements(By.tagName("th"));
+            for (int j = 0; j < headerCells.size(); j++) {
+                if (headerCells.get(j).getText().equals(header)) {
+                    columnIndex = j;
                     break;
                 }
             }
-            if (isSearched) {
-                break;
+            if (columnIndex == -1)
+                continue;
+            for (int i = 1; i < rows.size(); i++) {
+                WebElement row = rows.get(i);
+                List<WebElement> singles = row.findElements(By.tagName("td"));
+                if (singles.get(0).getText().equals(element)) {
+                    return singles.get(columnIndex).getText();
+                }
             }
         }
-        if (!isSearched) {
-            System.out.println("Warning: No such element found.");
-        }
-
+        return "Warning: element not found";
     }
+
+
 }
+
