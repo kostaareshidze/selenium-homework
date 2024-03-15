@@ -52,4 +52,10 @@ public class Constants {
     public static final String fakeCentro = "Centro";
     public static final String nyakundi = "Hillary";
     public static final String iagundi = "iagundi";
+    public static final String w2schools = "https://www.w3schools.com/python/default.asp";
+    public static final String ironSpider = "https://www.ironspider.ca/forms/checkradio.htm";
+    public static final String webDriverUni = "http://webdriveruniversity.com/To-Do-List/index.html";
+    public static final String scroll = "https://www.techlistic.com/2017/02/automate-demo-web-table-with-selenium.html";
+    public static final String webScroll = "http://webdriveruniversity.com/Scrolling/index.html";
+    public static final String expectedText = "Entries";
 }
