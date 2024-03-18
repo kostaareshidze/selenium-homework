@@ -2,10 +2,13 @@ import ge.tbcacademy.data.Constants;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class Exceptions {
@@ -13,9 +16,18 @@ public class Exceptions {
     WebDriver driver;
 
     @BeforeClass
-    public void setup() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+    @Parameters("browser")
+    public void setup(String browser) {
+        if (browser.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        }else if (browser.equalsIgnoreCase("firefox")){
+            WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            WebDriverManager.edgedriver().setup();
+            driver = new EdgeDriver();
+        }
         driver.manage().window().maximize();
     }
 
@@ -27,7 +39,7 @@ public class Exceptions {
     @Test
     public void noSuchElement() {
         try {
-
+            //NoSuchElement Exception
             driver.get(Constants.w2schools);
             WebElement element = driver.findElement(By.xpath("//button[@type='submit']"));
             WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -59,12 +71,11 @@ public class Exceptions {
         try {
             //TimeoutException
             driver.get(Constants.w2schools);
-            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebDriverWait wait = new WebDriverWait(driver, 5);
             WebElement element = driver.findElement(By.xpath("//button[@type='submit']"));
             wait.until(ExpectedConditions.visibilityOf(element));
             // Solution: Increase the timeout or wait for the element to be present
-            WebDriverWait wait1 = new WebDriverWait(driver, 20);
-            wait1.until(ExpectedConditions.visibilityOf(element));
+
 
         } catch (TimeoutException e) {
             e.printStackTrace();
@@ -94,10 +105,10 @@ public class Exceptions {
             driver.get(Constants.ironSpider);
             WebElement element = driver.findElement(By.xpath("//h1[@class='Heading1']"));
             //imagine element is removed or replaced
-            driver.navigate().refresh();
-            WebElement element1 = driver.findElement(By.xpath("//h1[@class='Heading1']"));
-            element1.click();
-            // Solution: Find the element again after the DOM refresh
+//            driver.navigate().refresh();
+//            WebElement element1 = driver.findElement(By.xpath("//h1[@class='Heading1']"));
+//            element1.click();
+          // Solution: Find the element again after the DOM refresh
 
         } catch (StaleElementReferenceException e) {
             e.printStackTrace();
@@ -114,8 +125,6 @@ public class Exceptions {
 
         } catch (NoSuchFrameException e) {
             e.printStackTrace();
-            // Solution: Ensure the frame exists before switching to it
-
         }
     }
     @Test

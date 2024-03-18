@@ -58,4 +58,9 @@ public class Constants {
     public static final String scroll = "https://www.techlistic.com/2017/02/automate-demo-web-table-with-selenium.html";
     public static final String webScroll = "http://webdriveruniversity.com/Scrolling/index.html";
     public static final String expectedText = "Entries";
+    public static final String techlisticURL = "https://www.techlistic.com/2017/02/automate-demo-web-table-with-selenium.html";
+    public static final String demoURL = "https://demo.automationtesting.in/AutoComplete.html";
+    public static final String start = "Geo";
+    public static final String active = "active_template";
+    public static final String pub = "pub_site";
 }
