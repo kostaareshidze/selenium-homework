@@ -4,6 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
@@ -18,22 +19,29 @@ public class Exceptions {
     @BeforeClass
     @Parameters("browser")
     public void setup(String browser) {
-        if (browser.equalsIgnoreCase("chrome")) {
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
-        }else if (browser.equalsIgnoreCase("firefox")){
-            WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
-        } else if (browser.equalsIgnoreCase("edge")) {
-            WebDriverManager.edgedriver().setup();
-            driver = new EdgeDriver();
+        switch (browser.toLowerCase()) {
+            case "chrome" -> {
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+            }
+            case "firefox" -> {
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+            }
+            case "edge" -> {
+                WebDriverManager.edgedriver().setup();
+                driver = new EdgeDriver();
+            }
+            default -> throw new IllegalArgumentException("Invalid browser specified in testng.xml");
         }
         driver.manage().window().maximize();
     }
 
     @AfterClass
     public void tearDown() {
-        driver.close();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     @Test
@@ -74,12 +82,14 @@ public class Exceptions {
             WebDriverWait wait = new WebDriverWait(driver, 5);
             WebElement element = driver.findElement(By.xpath("//button[@type='submit']"));
             wait.until(ExpectedConditions.visibilityOf(element));
+            element.click();
             // Solution: Increase the timeout or wait for the element to be present
-
-
-        } catch (TimeoutException e) {
+        } catch (NoSuchSessionException | TimeoutException e) {
             e.printStackTrace();
-        }
+            // Solution: Handle the NoSuchSessionException appropriately
+            // For example, you can reinitialize the WebDriver instance here if needed
+            // Or you can log a message indicating the session is already closed
+        } // Handle the TimeoutException appropriately
 
     }
 
@@ -98,22 +108,35 @@ public class Exceptions {
     }
 
     @Test
-    public void staleElement() {
-
+    @Parameters("browser")
+    public void staleElement(String browser) {
         try {
-            //StaleElementReferenceException
+            // StaleElementReferenceException
             driver.get(Constants.ironSpider);
             WebElement element = driver.findElement(By.xpath("//h1[@class='Heading1']"));
-            //imagine element is removed or replaced
-//            driver.navigate().refresh();
-//            WebElement element1 = driver.findElement(By.xpath("//h1[@class='Heading1']"));
-//            element1.click();
-          // Solution: Find the element again after the DOM refresh
 
-        } catch (StaleElementReferenceException e) {
+            // Simulate a scenario where the element is removed or replaced
+            // Perform some action to refresh the page (e.g., driver.navigate().refresh())
+            driver.navigate().refresh();
+
+            // Check if the session is still active before reinitializing the WebDriver
+            if (!(((RemoteWebDriver) driver).getSessionId() == null)) {
+                // Reinitialize the WebDriver instance after calling quit()
+                setup(browser); // Reinitialize the WebDriver
+
+                // Find the element again after the DOM refresh
+                WebElement refreshedElement = driver.findElement(By.xpath("//h1[@class='Heading1']"));
+
+                // Perform actions on the refreshed element
+                // For example, click the refreshed element
+                refreshedElement.click();
+            }
+        } catch (StaleElementReferenceException | NoSuchSessionException e) {
             e.printStackTrace();
             // Solution: Find the element again after the DOM refresh
-        }
+        } // Handle the NoSuchSessionException appropriately
+        // For example, you can log a message indicating the session is already closed
+
     }
 
     @Test
